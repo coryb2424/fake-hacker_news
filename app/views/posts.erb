@@ -1,0 +1,53 @@
+<table border="0" cellpadding="0" cellspacing="0" width="85%" style="background-color: #f6f6ef;">
+   <tbody>
+    <tr>
+      <td bgcolor="#ff6600">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding:2px">
+          <tbody>
+            <tr>
+              <td style="width:18px;padding-right:4px">
+                  <a href="/">
+                      <img src="/y18.png" width="18" height="18" style="border:1px white solid;">
+                  </a>
+              </td>
+              <td style="line-height:12pt; height:10px;">
+                <span>
+                  <b>
+                    <a href="/">Hacker News</a>
+                  </b>
+                  <a href="/new">new</a>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+      <td style="height:10px"></td>
+    </tr>
+    <tr>
+      <td>
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tbody>
+            <% @posts.each_with_index do |post, index| %>
+                <% match_data = post.url.match(/\Ahttps?:\/\/(www.)?(?<site>.*\..*)\/[\w]+/)%>
+
+              <tr>
+                <td align="right" valign="top"><span><%= "#{index + 1}."%></span></td>
+                <td valign="top" style="padding: 0 2px 0 2px"><a href=<%="/upvote/#{post.id}"%>><i class="fas fa-sort-up"></i></a></td>
+                <td>
+                  <a href=<%= post.url %> target="_blank": opens in new tab><%= post.name %></a>
+                  <a href=<%= post.url %> target="_blank": opens in new tab><span style="font-size: 12px"><%= "(#{match_data[:site] unless match_data.nil?})" %></span></a>
+                </td>
+              </tr>
+              <tr>
+                 <td colspan="2"></td>
+                 <td style="font-size: 11px"><%= "#{post.votes} points by #{post.user.username} #{(Post.first.updated_at.hour - Time.now.hour).abs} hours ago" %></td>
+              </tr>
+              <tr style="height:5px"></tr>
+            <% end %>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
